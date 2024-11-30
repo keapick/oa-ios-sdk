@@ -8,7 +8,7 @@
 import Foundation
 import Marketing
 
-/// AccessGroup is a the team id + bundle id.
+/// AccessGroup is the team id + bundle id.
 /// In older apps, the team id might be in the `Info.plist`, these days it's not populated there by default.
 actor AccessGroupCollector {
     
@@ -37,6 +37,5 @@ actor AccessGroupCollector {
         Logger.shared.logWarning(message: "Failed to read access group")
         return nil
     }
-    
     
 }

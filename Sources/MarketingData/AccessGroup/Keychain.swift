@@ -8,7 +8,7 @@
 import Foundation
 import Marketing
 
-/// Keychain helper methods for TeamIDCollector
+/// Keychain helper methods for AccessGroupCollector
 /// Do NOT use this for passwords! Access control is NOT set.
 public struct Keychain {
     
