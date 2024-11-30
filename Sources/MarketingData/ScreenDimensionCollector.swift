@@ -21,7 +21,6 @@ class ScreenDimensionCollector: NSObject {
     /// https://developer.apple.com/documentation/uikit/uiscreen/1617815-mainscreen
     @MainActor func readScreenDimensions() -> ScreenDimensions {
         
-        // TODO: replace this, UIScreen.main is deprecated. Also is this even actually useful?
         let scale = UIScreen.main.scale
         let width = UIScreen.main.bounds.size.width * scale
         let height = UIScreen.main.bounds.size.height * scale
