@@ -9,9 +9,6 @@ import XCTest
 @testable import MarketingData
 
 final class NetworkMonitorTests: XCTestCase {
-    
-    // The monitor maintains a queue for network status updates, make sure it's up and running
-    // TODO: this is probably a race with `readCurrentPathData`
     let monitor = NetworkMonitor.shared
 
     override func setUpWithError() throws {
