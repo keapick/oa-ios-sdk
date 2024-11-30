@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "testString": "Hello World!",
+    "testInt": 12345,
+    "testArray": [ "abc", "xyz" ],
+    "testDictionary": {
+        "when": "Today",
+        "where": "At Work"
+    }
+}
