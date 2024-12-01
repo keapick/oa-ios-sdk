@@ -22,7 +22,6 @@ final class NetworkToolsTests: XCTestCase {
         let networkInfo = try NetworkTools.readNetworkInterfaces()
         
         // Example from an iPhone with cell and wifi
-        // TODO: more checks on ipv6, don't have a test environments setup for this
         /*
          ...
          ▿ 3 : NetworkInfoIfaddrs

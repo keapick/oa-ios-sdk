@@ -89,13 +89,12 @@ final class BundleDataCollectorTests: XCTestCase {
         
         XCTAssertNotNil(schemes)
         
-        // TODO: move this test into a host app with schemes, the unit tests have nothing
+        // TODO: unit tests have no schemes, this test is more valuable within a host app
         for schemeData in schemes {
             if schemeData.type == "Editor" {
                 XCTAssertTrue(schemeData.schemes.count == 2)
                 XCTAssertTrue(schemeData.schemes.contains("marketing"))
                 XCTAssertTrue(schemeData.schemes.contains("marketingTest"))
-
                 
             } else if schemeData.type == "Viewer" {
                 XCTAssertTrue(schemeData.schemes.count == 1)

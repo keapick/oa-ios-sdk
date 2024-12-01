@@ -89,34 +89,28 @@ final class SystemDataCollectorTests: XCTestCase {
         
         // Varies by device and simulator host
         // Confirm the values are not empty
-        if let systemInfo = SystemDataCollector.readUtsnameSystemInfo() {
+        let systemInfo = SystemDataCollector.readUtsnameSystemInfo()
             
-            XCTAssertNotNil(systemInfo)
-            XCTAssertTrue(systemInfo.sysname == "Darwin")
-            XCTAssertTrue(systemInfo.nodename.count > 0)
-            XCTAssertTrue(systemInfo.release.count > 0)
-            XCTAssertTrue(systemInfo.version.count > 0)
-            XCTAssertTrue(systemInfo.machine.count > 0)
-            
-            // Confirm version string contains the release and sysname
-            XCTAssertTrue(systemInfo.version.contains(systemInfo.release))
-            XCTAssertTrue(systemInfo.version.contains(systemInfo.sysname))
-        } else {
-            XCTFail()
-        }
+        XCTAssertNotNil(systemInfo)
+        XCTAssertTrue(systemInfo.sysname == "Darwin")
+        XCTAssertTrue(systemInfo.nodename.count > 0)
+        XCTAssertTrue(systemInfo.release.count > 0)
+        XCTAssertTrue(systemInfo.version.count > 0)
+        XCTAssertTrue(systemInfo.machine.count > 0)
+        
+        // Confirm version string contains the release and sysname
+        XCTAssertTrue(systemInfo.version.contains(systemInfo.release))
+        XCTAssertTrue(systemInfo.version.contains(systemInfo.sysname))
     }
     
     func testUnameMachineAndSysctlMachineAreEquivalent() throws {
-        if let uname = SystemDataCollector.readUtsnameSystemInfo() {
-            let sysctl = SystemDataCollector.readSysctlSystemInfo()
-            
-            XCTAssertNotNil(uname)
-            XCTAssertNotNil(sysctl)
-            
-            XCTAssertTrue(uname.machine == sysctl.machine)
-        } else {
-            XCTFail()
-        }
+        let uname = SystemDataCollector.readUtsnameSystemInfo()
+        let sysctl = SystemDataCollector.readSysctlSystemInfo()
+        
+        XCTAssertNotNil(uname)
+        XCTAssertNotNil(sysctl)
+        
+        XCTAssertTrue(uname.machine == sysctl.machine)
     }
     
 }
