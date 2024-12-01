@@ -45,7 +45,7 @@ public struct BundleDataCollector {
         return nil
     }
     
-    /// Reacd Team Identifier
+    /// Read Team Identifier
     /// Not added to the Info.plist by default.
     ///
     /// Add the following snippet to the Info.plist
@@ -177,7 +177,6 @@ public struct BundleDataCollector {
             }
             
         } else {
-            // main bundle does not exist without a Host App
             Logger.shared.logWarning(message: "No App Store receipt URL found. This is expected on unhosted unit tests.")
         }
         

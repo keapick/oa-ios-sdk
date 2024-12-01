@@ -23,7 +23,6 @@ public struct Keychain {
         
         let status = SecItemDelete(query)
         if status != 0 {
-            // ignoring this since it always occurs on first check for securityGroup
             Logger.shared.logVerbose(message: "deleteFromKeychain OSStatus: \(status). This often occurs on first check for securityGroup.")
         }
     }
@@ -88,7 +87,6 @@ public struct Keychain {
             Logger.shared.logVerbose(message: "readAccessGroupFromKeychain OSStatus: \(status)")
         }
 
-        // read data from Keychain
         guard let dict = value as? [String: Any],
               let accessGroup = dict[kSecAttrAccessGroup as String] as? String
         else {

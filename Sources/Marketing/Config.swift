@@ -38,7 +38,7 @@ public struct Config: Equatable {
     
     // UserDefaults requires a privacy disclosure but is helpful in caching expensive or one time data.
     // 1. Getting the user agent from WebKit is expensive and only changes on OS updates
-    // 2. Attribution Token should only be collected and consumed on install
+    // 2. Apple Attribution Token should only be collected and consumed on install
     public var useUserDefaults: Bool = true
     
     // App information shared across all users of an app version
@@ -64,7 +64,7 @@ public struct Config: Equatable {
     
     // File creation dates can proxy for build date and install date
     // Can be used to avoid costly ads attribution callouts on known old installs
-    // High specificity, requires disclosure
+    // Potentially high specificity, requires disclosure
     public var includeFileCreationDates: Bool = false
     
     // ID for Vendor, consistent across apps from the same vendor

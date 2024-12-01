@@ -26,7 +26,7 @@ public struct Linking {
     ///
     /// baseURL - base url
     /// route - path components required for basic functionality. This should be short and SEO friendly. ~75 chars or less.
-    /// codable - Swift Codable converted to a JSON String and  appended as a query parameter.
+    /// codable - Swift Codable converted to a JSON String and appended as a query parameter.
     /// compress - option to attempt compression of JSON String, this is not guaranteed for small items.
     ///
     /// Example:
