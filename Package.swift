@@ -55,6 +55,7 @@ let package = Package(
             resources: [
                 .copy("Resources/compression_lorem.txt"),
                 .copy("Resources/compression_ambrose.txt"),
+                .copy("Resources/compressed_ambrose.txt"),
                 .copy("Resources/config.json"),
                 .copy("Resources/config_data_disabled.json"),
                 .copy("Resources/config_data_enabled.json"),
