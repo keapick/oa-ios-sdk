@@ -8,7 +8,8 @@
 import Foundation
 
 /// Helper class to get Logger to conform to ObservableObject for SwiftUI
-/// For in app debug views, not terribly useful outside of test apps.
+/// For debug views.
+@MainActor
 public final class LoggerSwiftUI: ObservableObject, LogDestination {
     
     // ideally, this would be readonly, but I can't seem to get that to work
@@ -24,8 +25,14 @@ public final class LoggerSwiftUI: ObservableObject, LogDestination {
         Logger.shared.playbackBuffer()
     }
     
-    @MainActor
-    private func internalHandle(message: String) {
+    // incoming log messages can be from any thread, just fire and forget them
+    public nonisolated func handle(message: String) {
+        Task {
+            await self.eventuallyHandle(message: message)
+        }
+    }
+    
+    private func eventuallyHandle(message: String) {
         self.textLines.append(message)
         if self.textLines.count > self.maxLines {
             self.textLines.removeFirst()
@@ -38,20 +45,13 @@ public final class LoggerSwiftUI: ObservableObject, LogDestination {
         }
     }
     
-    public func handle(message: String) {
+    public func removalAll() {
         
-    }
-    
-    @MainActor
-    private func internalClear() {
-        // UI elements are cleared immediately on main.
-        // The backing Logger is scheduled to be cleared on a background queue.
-        Logger.shared.clearBuffer()
+        // UI elements are cleared immediately on main
         self.text.removeAll()
         self.textLines.removeAll()
-    }
-    
-    public func removalAll() {
-
+        
+        // The backing Logger is scheduled to be cleared on a background queue
+        Logger.shared.clearBuffer()
     }
 }
