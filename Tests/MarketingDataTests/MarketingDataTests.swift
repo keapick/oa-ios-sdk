@@ -9,7 +9,7 @@ import Testing
 @testable import Marketing
 @testable import MarketingData
 
-struct EchoDeviceDataTests {
+struct MarketingDataTests {
     
     /*
      
