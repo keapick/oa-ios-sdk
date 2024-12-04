@@ -1,0 +1,8 @@
+{
+    "version":"1.0.0",
+    "includeAttributionToken": false,
+    "includeAppleReceipt": true,
+    "includeNetworkInformation": true,
+    "includeFileCreationDates": true,
+    "includeIDFV": true
+}
