@@ -53,20 +53,20 @@ final class LinkingTests: XCTestCase {
     }
     
     func testCreateLinkWithParams() throws {
-        guard let baseURL = URL(string:"https://ieesizaq.com/") else {
+        guard let baseURL = URL(string:"https://openattribution.dev/") else {
             XCTFail()
             return
         }
         
         let url = try Linking.createLink(baseURL: baseURL, route:["e", "resource"], queryParameters: ["number":"12345"])
-        let expected = "https://ieesizaq.com/e/resource?number=12345"
+        let expected = "https://openattribution.dev//e/resource?number=12345"
         let actual = url.absoluteString
         
         XCTAssertTrue(actual == expected)
     }
     
     func testReadQueryParameter() throws {
-        guard let baseURL = URL(string:"https://ieesizaq.com/") else {
+        guard let baseURL = URL(string:"https://openattribution.dev/") else {
             XCTFail()
             return
         }
@@ -81,7 +81,7 @@ final class LinkingTests: XCTestCase {
     }
     
     func testReadQueryParameter_WrongName() throws {
-        guard let baseURL = URL(string:"https://ieesizaq.com/") else {
+        guard let baseURL = URL(string:"https://openattribution.dev/") else {
             XCTFail()
             return
         }
@@ -140,7 +140,7 @@ final class LinkingTests: XCTestCase {
     }
         
     func testCreateLinkWithCodable() throws {
-        guard let baseURL = URL(string:"https://ieesizaq.com/") else {
+        guard let baseURL = URL(string:"https://openattribution.dev/") else {
             XCTFail()
             return
         }
@@ -148,14 +148,14 @@ final class LinkingTests: XCTestCase {
         let codable = Book(title: "title", text: "Hello World!")
         let url = try Linking.createLink(baseURL: baseURL, route: ["e", "resource"], codable: codable)
 
-        let expected = "https://ieesizaq.com/e/resource?json=%257B%2522text%2522:%2522Hello%2520World!%2522,%2522title%2522:%2522title%2522%257D"
+        let expected = "https://openattribution.dev/e/resource?json=%257B%2522text%2522:%2522Hello%2520World!%2522,%2522title%2522:%2522title%2522%257D"
         let actual = url.absoluteString
         
         XCTAssertTrue(actual == expected)
     }
 
     func testCreateLinkWithCodableCompressed() throws {
-        guard let baseURL = URL(string:"https://ieesizaq.com/") else {
+        guard let baseURL = URL(string:"https://openattribution.dev/") else {
             XCTFail()
             return
         }
@@ -171,8 +171,8 @@ final class LinkingTests: XCTestCase {
         if let compressed = loadCompressedAmbroseText() {
             
             // Ugly brute force string check since the query parameter order is undefined
-            let expected1 = "https://ieesizaq.com/e/resource?json=\(compressed)&json_size=414241"
-            let expected2 = "https://ieesizaq.com/e/resource?json_size=414241&json=\(compressed)"
+            let expected1 = "https://openattribution.dev/e/resource?json=\(compressed)&json_size=414241"
+            let expected2 = "https://openattribution.dev/e/resource?json_size=414241&json=\(compressed)"
             
             let actual = url.absoluteString
             XCTAssertTrue(actual == expected1 || actual == expected2)

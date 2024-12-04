@@ -18,13 +18,14 @@ public struct AttributionToken: Codable, Sendable {
     let collectionTimestamp: String
 }
 
-@MainActor public class AttributionTokenCollector: NSObject {
+@MainActor
+public class AttributionTokenCollector: NSObject {
         
     /// Apple recommends trying up to 3 times with a 5s retry interval
     let maxTries = 3
     let retryInterval = 5.0
-    let appleTokenKey = "com.ieesizaq.appleToken"
-    let appleTokenTimeStampKey = "com.ieesizaq.appleTokenTimeStamp"
+    let appleTokenKey = "dev.openattribution.appleToken"
+    let appleTokenTimeStampKey = "dev.openattribution.appleTokenTimeStamp"
     
     let dataStore: DataStore
     public init(dataStore: DataStore) {

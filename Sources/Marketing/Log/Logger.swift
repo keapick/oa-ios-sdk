@@ -25,6 +25,8 @@ struct DefaultDestination: LogDestination {
     }
 }
 
+/// Many apps have their own existing logging system.
+/// This SDK logger allows redirecting log messages to whatever system the App dev chooses.
 public final class Logger: NSObject {
     
     // TODO: is there a more Swift Concurrency friendly singleton. This is using an internal isolation queue.
@@ -32,7 +34,7 @@ public final class Logger: NSObject {
 
     var currentLogLevel = LogLevel.warning
     lazy var destination : LogDestination = DefaultDestination()
-    lazy var queue = DispatchQueue(label: "com.ieesizaq.echologqueue")
+    lazy var queue = DispatchQueue(label: "dev.openattribution.logqueue")
     
     public override init() {
         super.init()

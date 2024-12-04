@@ -28,7 +28,7 @@ public final class NetworkMonitor: NSObject, Sendable {
     
     public static let shared: NetworkMonitor = NetworkMonitor()
     
-    let queue = DispatchQueue(label:"com.ieesizaq.networkMonitor")
+    let queue = DispatchQueue(label:"dev.openattribution.networkMonitor")
     let monitor = NWPathMonitor()
     
     public override init() {

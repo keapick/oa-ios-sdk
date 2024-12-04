@@ -13,7 +13,8 @@ import Marketing
 
 /// Reads userAgent string from WKWebView, this should match what Safari reports.
 /// https://developer.apple.com/documentation/webkit/wkwebview
-@MainActor class UserAgentCollector: NSObject {
+@MainActor
+class UserAgentCollector: NSObject {
 
     #if !os(tvOS)
     lazy var webkit: WKWebView = WKWebView(frame: CGRect.zero)
@@ -26,8 +27,8 @@ import Marketing
     
     /// Fetching the user agent is a rather expensive call, therefore cache the result. It only changes with OS updates.
     func readCachedUserAgent() async -> String? {
-        let buildVersionKey = "com.ieesizaq.osversion"
-        let userAgentStringKey = "com.ieesizaq.userAgentString"
+        let buildVersionKey = "dev.openattribution.osversion"
+        let userAgentStringKey = "dev.openattribution.userAgentString"
         
         let currentBuildVersion = SystemDataCollector.readSysctlSystemInfo().osversion
         let savedBuildVersion = await dataStore.fetchString(key: buildVersionKey)

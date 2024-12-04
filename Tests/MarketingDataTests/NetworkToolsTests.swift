@@ -56,7 +56,7 @@ final class NetworkToolsTests: XCTestCase {
     func testReadNetworkInterfaceInfoIPv4Private() throws {
         let networkInfo = try NetworkTools.readNetworkInterfaces(includeIPv4: true, includeIPv6: false, privateOnly: true)
         
-        // iPhone 15 simulator has 1å
+        // iPhone 15 simulator has 1
         XCTAssertNotNil(networkInfo)
         XCTAssertTrue(networkInfo.count > 0)
     }

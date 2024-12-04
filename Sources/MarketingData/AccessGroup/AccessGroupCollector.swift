@@ -12,7 +12,7 @@ import Marketing
 /// In older apps, the team id might be in the `Info.plist`, these days it's not populated there by default.
 actor AccessGroupCollector {
     
-    let service = "com.ieesizaq.accessgroup"
+    let service = "dev.openattribution.accessgroup"
     let key = "dummy"
 
     /// The security access group string is prefixed with the Apple Developer Team ID

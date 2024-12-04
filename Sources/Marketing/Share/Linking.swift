@@ -20,6 +20,7 @@ public enum LinkingError: Error {
 public let maxSafeURLLength: Int = 2048
 
 /// Helper methods for creation and consumption links
+/// TODO: consider integration with link shorteners
 public struct Linking {
 
     /// Link creation with option to append codable as a query parameter
@@ -56,7 +57,7 @@ public struct Linking {
     /// queryParameters - optional data. Additional parameters are often appended by 3rd parties, such as ad networks or network infrastructure.
     ///
     /// Example:
-    /// https://ieesizaq.com/e/resource?momento=compressedJSON&momento_s=1234
+    /// https://openattribution.dev/e/resource?momento=compressedJSON&momento_s=1234
     public static func createLink(baseURL: URL, route: [String], queryParameters: [String : String]) throws -> URL {
         if #available(iOS 16.0, tvOS 16.0, *) {
             if var copy = URL(string: baseURL.absoluteString) {
