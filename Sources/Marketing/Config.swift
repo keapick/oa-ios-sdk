@@ -31,7 +31,6 @@ struct ConfigDTO: Codable, Equatable {
 
 // JSON config file to control behavior of this library
 // Helpful when supporting platforms such as React Native, Unity or handling early lifecycle events
-// TODO: confirm that it is ok to simply add Sendable due to structs being copy on write
 public struct Config: Equatable, Sendable {
         
     public let version: String
