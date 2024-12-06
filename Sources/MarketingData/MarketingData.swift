@@ -9,7 +9,7 @@ import Foundation
 import Marketing
 
 // By default, do not use IDFA
-public class IDFAMock: IDFASource {
+public final class IDFAMock: IDFASource, Sendable {
     public func readIdentifierForAdvertiser() -> String? {
         return nil
     }
@@ -55,6 +55,7 @@ public struct DeviceSummary: Codable {
     var trackingAuthorizationStatus: String?
 }
 
+
 /// Generic app and device data often collected for fraud and marketing analysis.
 /// This is not an exhaustive list and includes mostly things available to all app types.
 ///
@@ -73,7 +74,7 @@ public struct DeviceSummary: Codable {
 /// For promo code fraud prevention, use DCDevice. It provides 2 bits that are unique to the device managed through Apple.
 /// https://developer.apple.com/documentation/devicecheck/dcdevice
 ///
-public final class MarketingData: NSObject {
+public final class MarketingData: NSObject, Sendable {
     
     let networkMonitor = NetworkMonitor.shared
     let idfaSource: IDFASource

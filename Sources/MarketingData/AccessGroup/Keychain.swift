@@ -67,7 +67,7 @@ public struct Keychain {
             Logger.shared.logVerbose(message: "readAccessGroupFromKeychain OSStatus: \(status)")
         }
 
-        Logger.shared.logWarning(message: "Failed to read string from keychain")
+        Logger.shared.logVerbose(message: "Failed to read string from keychain")
         return nil
     }
     

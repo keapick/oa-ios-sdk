@@ -15,7 +15,7 @@ import Marketing
 /// Does NOT request access to IDFA or show the ATT prompt!
 ///
 /// Apps using this code will need to display the ATT prompt and provide a Privacy Manifest.
-public class IDFACollector: IDFASource {
+public final class IDFACollector: IDFASource, Sendable {
     
     /// Reads the advertising identifier
     /// This API requires disclosure and ATT permission for a valid response

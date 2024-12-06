@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LogLevel: Int, Codable {
+public enum LogLevel: Int, Codable, Sendable {
     case verbose = 0
     case debug
     case warning

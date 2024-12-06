@@ -59,7 +59,7 @@ final class LinkingTests: XCTestCase {
         }
         
         let url = try Linking.createLink(baseURL: baseURL, route:["e", "resource"], queryParameters: ["number":"12345"])
-        let expected = "https://openattribution.dev//e/resource?number=12345"
+        let expected = "https://openattribution.dev/e/resource?number=12345"
         let actual = url.absoluteString
         
         XCTAssertTrue(actual == expected)
