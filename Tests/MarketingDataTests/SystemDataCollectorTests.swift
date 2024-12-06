@@ -27,11 +27,11 @@ final class SystemDataCollectorTests: XCTestCase {
     }
 
     func testReadIdentifierForVendor() throws {
-//        let idfv = await SystemDataCollector.readIdentifierForVendor()
-//
-//        // idfv's are 36 chars long
-//        XCTAssertNotNil(idfv)
-//        XCTAssertTrue(idfv.count == 36)
+        let idfv = await SystemDataCollector.readIdentifierForVendor()
+
+        // idfv's are 36 chars long
+        XCTAssertNotNil(idfv)
+        XCTAssertTrue(idfv.count == 36)
     }
     
     func testReadSysctlSystemInfo() throws {
