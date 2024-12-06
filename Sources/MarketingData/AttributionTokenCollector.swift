@@ -19,7 +19,7 @@ public struct AttributionToken: Codable, Sendable {
 }
 
 @MainActor
-public class AttributionTokenCollector: NSObject {
+public class AttributionTokenCollector {
         
     /// Apple recommends trying up to 3 times with a 5s retry interval
     let maxTries = 3

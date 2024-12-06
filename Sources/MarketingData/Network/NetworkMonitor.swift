@@ -24,15 +24,14 @@ public struct NetworkPathSummary: Codable {
 /// Consider retries, offline storage, etc
 ///
 /// https://developer.apple.com/documentation/network/nwpathmonitor
-public final class NetworkMonitor: NSObject, Sendable {
+public final class NetworkMonitor: Sendable {
     
     public static let shared: NetworkMonitor = NetworkMonitor()
     
     let queue = DispatchQueue(label:"dev.openattribution.networkMonitor")
     let monitor = NWPathMonitor()
     
-    public override init() {
-        super.init()
+    public init() {
         self.monitor.start(queue: self.queue)
     }
     

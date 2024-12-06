@@ -74,7 +74,7 @@ public struct DeviceSummary: Codable {
 /// For promo code fraud prevention, use DCDevice. It provides 2 bits that are unique to the device managed through Apple.
 /// https://developer.apple.com/documentation/devicecheck/dcdevice
 ///
-public final class MarketingData: NSObject, Sendable {
+public final class MarketingData: Sendable {
     
     let networkMonitor = NetworkMonitor.shared
     let idfaSource: IDFASource
@@ -83,7 +83,7 @@ public final class MarketingData: NSObject, Sendable {
         self.idfaSource = idfaSource
     }
     
-    public override init() {
+    public init() {
         self.idfaSource = IDFAMock()
     }
     

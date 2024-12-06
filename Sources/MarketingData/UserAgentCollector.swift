@@ -14,7 +14,7 @@ import Marketing
 /// Reads userAgent string from WKWebView, this should match what Safari reports.
 /// https://developer.apple.com/documentation/webkit/wkwebview
 @MainActor
-class UserAgentCollector: NSObject {
+class UserAgentCollector {
 
     #if !os(tvOS)
     lazy var webkit: WKWebView = WKWebView(frame: CGRect.zero)

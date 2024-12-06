@@ -15,7 +15,7 @@ struct ScreenDimensions: Codable {
 }
 
 /// Reads Screen data
-class ScreenDimensionCollector: NSObject {
+class ScreenDimensionCollector {
     
     /// Reads screen data using a deprecated API
     /// https://developer.apple.com/documentation/uikit/uiscreen/1617815-mainscreen
