@@ -16,12 +16,12 @@ public enum LinkingError: Error {
     case failedToConvertCodableToCompressedString
 }
 
-// Most browsers cannot handle URLs over ~2k characters
-public let maxSafeURLLength: Int = 2048
-
 /// Helper methods for creation and consumption links
 /// TODO: consider integration with link shorteners
 public struct Linking {
+    
+    // Most browsers cannot handle URLs over ~2k characters
+    public static let maxSafeURLLength: Int = 2048
 
     /// Link creation with option to append codable as a query parameter
     ///
