@@ -22,7 +22,7 @@ public final class IDFAMock: IDFASource, Sendable {
 public struct DeviceSummary: Codable {
     // Metadata
     let sdkVersion: String
-    let creationTimestamp: String
+    let requestTimestamp: String
     
     // App details
     var executableName: String?
@@ -112,7 +112,7 @@ public final class MarketingData: Sendable {
             dataStore = UserDefaultsDataStore()
         }
         
-        var summary = DeviceSummary(sdkVersion: "1.0.0", creationTimestamp: String(Date().timeIntervalSince1970))
+        var summary = DeviceSummary(sdkVersion: "1.0.0", requestTimestamp: String(Date().timeIntervalSince1970))
 
         if config.includeAppDetails {
             summary.executableName = BundleDataCollector.readExecutableName()

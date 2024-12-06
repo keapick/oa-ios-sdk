@@ -17,6 +17,8 @@ import Marketing
 /// Apps using this code will need to display the ATT prompt and provide a Privacy Manifest.
 public final class IDFACollector: IDFASource, Sendable {
     
+    public init() { }
+    
     /// Reads the advertising identifier
     /// This API requires disclosure and ATT permission for a valid response
     /// Simulators always return an all 0 response, regardless of ATT status
