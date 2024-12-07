@@ -7,12 +7,12 @@
 
 import Network
 
-public struct NetworkInterfaceSummary: Codable {
+public struct NetworkInterfaceSummary: Codable, Sendable {
     public let name: String
     public let type: String
 }
 
-public struct NetworkPathSummary: Codable {
+public struct NetworkPathSummary: Codable, Sendable {
     public let status: String
     public let interfaces: [NetworkInterfaceSummary]
 }

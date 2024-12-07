@@ -19,7 +19,7 @@ public final class IDFAMock: IDFASource, Sendable {
     }
 }
 
-public struct DeviceSummary: Codable {
+public struct DeviceSummary: Codable, Sendable {
     // Metadata
     let sdkVersion: String
     let requestTimestamp: String
@@ -92,7 +92,8 @@ public final class MarketingData: Sendable {
         let summary = await summary(config)
         
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
+        encoder.outputFormatting = ([.prettyPrinted, .sortedKeys])
+        
         do {
             let data = try encoder.encode(summary)
             if let string = String(data: data, encoding: .utf8) {
