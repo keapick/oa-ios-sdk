@@ -78,6 +78,8 @@ public struct Linking {
                 copy.append(queryItems: queryItems)
                 return copy
             }
+        } else {
+           print("TODO: Add pre-iOS 16 support for query parameters")
         }
         throw LinkingError.failedToCreateLink
     }
@@ -99,6 +101,8 @@ public struct Linking {
                     }
                 }
             }
+        } else {
+            print("TODO: Add pre-iOS 16 support for query parameters")
         }
         return nil
     }

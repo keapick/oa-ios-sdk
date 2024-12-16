@@ -5,7 +5,14 @@
 //  Created by echo on 11/24/24.
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
+
+#if canImport(AppKit)
+import AppKit
+#endif
+
 import Marketing
 
 struct Utsname: Codable {
@@ -35,7 +42,8 @@ struct SystemDataCollector {
     
     /// IDFV, shared across apps from the same vendor on this device
     /// https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
-    @MainActor static func readIdentifierForVendor() -> String {
+    @MainActor static func readIdentifierForVendor() async -> String {
+        #if canImport(UIKit)
         if let idfv = UIDevice.current.identifierForVendor?.uuidString {
             if ("00000000-0000-0000-0000-000000000000" == idfv) {
                 Logger.shared.logDebug(message: "identifierForVendor is all 0. This is expected on AppClips.")
@@ -44,11 +52,18 @@ struct SystemDataCollector {
         } else {
             Logger.shared.logDebug(message: "IDFV not found")
         }
+        #endif
         return ""
     }
     
-    @MainActor static func readSystemVersion() -> String {
-        return UIDevice.current.systemVersion
+    @MainActor static func readSystemVersion() async -> String {
+        var version = ""
+        
+        #if canImport(UIKit)
+        version = UIDevice.current.systemVersion
+        #endif
+        
+        return version
     }
     
     /// Read system info from uname

@@ -40,22 +40,19 @@ public final class IDFACollector: IDFASource, Sendable {
     ///
     /// https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/authorizationstatus
     public func readAppTrackingTransparencyOptInStatus() -> String? {
-        if #available(iOS 14.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, macOS 11.0, *) {
-            var status: String
-            switch ATTrackingManager.trackingAuthorizationStatus {
-            case .notDetermined:
-                status = "notDetermined"
-            case .restricted:
-                status = "restricted"
-            case .denied:
-                status = "denied"
-            case .authorized:
-                status = "authorized"
-            @unknown default:
-                status = "unknown"
-            }
-            return status
+        var status: String
+        switch ATTrackingManager.trackingAuthorizationStatus {
+        case .notDetermined:
+            status = "notDetermined"
+        case .restricted:
+            status = "restricted"
+        case .denied:
+            status = "denied"
+        case .authorized:
+            status = "authorized"
+        @unknown default:
+            status = "unknown"
         }
-        return "unavailable"
+        return status
     }
 }
