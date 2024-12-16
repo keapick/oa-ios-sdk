@@ -67,7 +67,7 @@ public struct Keychain {
             Logger.shared.logVerbose(message: "readAccessGroupFromKeychain OSStatus: \(status)")
         }
 
-        Logger.shared.logWarning(message: "Failed to read string from keychain")
+        Logger.shared.logVerbose(message: "Failed to read string from keychain")
         return nil
     }
     
@@ -90,7 +90,7 @@ public struct Keychain {
         guard let dict = value as? [String: Any],
               let accessGroup = dict[kSecAttrAccessGroup as String] as? String
         else {
-            Logger.shared.logWarning(message: "Failed to read access group from keychain")
+            Logger.shared.logVerbose(message: "Failed to read access group from keychain")
             return nil
         }
         

@@ -19,7 +19,7 @@ public struct AttributionToken: Codable, Sendable {
 }
 
 @MainActor
-public class AttributionTokenCollector: NSObject {
+public class AttributionTokenCollector {
         
     /// Apple recommends trying up to 3 times with a 5s retry interval
     let maxTries = 3
@@ -38,35 +38,32 @@ public class AttributionTokenCollector: NSObject {
     ///
     /// With retries, fetching a new Apple attribution token  can take upwards of 15s, normally it's much faster.
     public func requestAppleAttributionToken(forceFresh: Bool) async -> AttributionToken? {
-        if #available(iOS 14.3, macCatalyst 14.3, visionOS 1.0, *) {
+        if forceFresh != true,
+            let token = await dataStore.fetchString(key: self.appleTokenKey),
+            let timestamp = await dataStore.fetchString(key: self.appleTokenTimeStampKey) {
             
-            if forceFresh != true,
-                let token = await dataStore.fetchString(key: self.appleTokenKey),
-                let timestamp = await dataStore.fetchString(key: self.appleTokenTimeStampKey) {
+            Logger.shared.logVerbose(message: "Using previously cached Apple attribution token.")
+            return AttributionToken(token: token, collectionTimestamp: timestamp)
+            
+        } else {
+            
+            var attemptCount = 0
+            while attemptCount < self.maxTries {
                 
-                Logger.shared.logVerbose(message: "Using previously cached Apple attribution token.")
-                return AttributionToken(token: token, collectionTimestamp: timestamp)
-                
-            } else {
-                
-                var attemptCount = 0
-                while attemptCount < self.maxTries {
-                    
-                    if let token = self.requestToken() {
-                        Logger.shared.logVerbose(message: "Using fresh Apple attribution token.")
+                if let token = self.requestToken() {
+                    Logger.shared.logVerbose(message: "Using fresh Apple attribution token.")
 
-                        let timestamp = String(Date().timeIntervalSince1970)
-                        await dataStore.saveString(key: self.appleTokenKey, value: token)
-                        await dataStore.saveString(key: self.appleTokenTimeStampKey, value: timestamp)
-                        return AttributionToken(token: token, collectionTimestamp: timestamp)
-                    }
-                    attemptCount += 1
-                    
-                    do {
-                        // Remember Task.sleep does not block like Thread.sleep does
-                        try await Task.sleep(nanoseconds: UInt64(self.retryInterval * 1_000_000_000))
-                    } catch { }
+                    let timestamp = String(Date().timeIntervalSince1970)
+                    await dataStore.saveString(key: self.appleTokenKey, value: token)
+                    await dataStore.saveString(key: self.appleTokenTimeStampKey, value: timestamp)
+                    return AttributionToken(token: token, collectionTimestamp: timestamp)
                 }
+                attemptCount += 1
+                
+                do {
+                    // Remember Task.sleep does not block like Thread.sleep does
+                    try await Task.sleep(nanoseconds: UInt64(self.retryInterval * 1_000_000_000))
+                } catch { }
             }
         }
         
@@ -76,7 +73,6 @@ public class AttributionTokenCollector: NSObject {
     
     /// Reads apple attribution token for Apple Search Ads attribution. This API is always allowed.
     /// https://developer.apple.com/documentation/adservices/aaattribution/attributiontoken()
-    @available(iOS 14.3, macCatalyst 14.3, visionOS 1.0, *)
     func requestToken() -> String? {
         #if !os(tvOS)
         do {

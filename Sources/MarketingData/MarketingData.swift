@@ -9,7 +9,7 @@ import Foundation
 import Marketing
 
 // By default, do not use IDFA
-public class IDFAMock: IDFASource {
+public final class IDFAMock: IDFASource, Sendable {
     public func readIdentifierForAdvertiser() -> String? {
         return nil
     }
@@ -19,10 +19,10 @@ public class IDFAMock: IDFASource {
     }
 }
 
-public struct DeviceSummary: Codable {
+public struct DeviceSummary: Codable, Sendable {
     // Metadata
     let sdkVersion: String
-    let creationTimestamp: String
+    let requestTimestamp: String
     
     // App details
     var executableName: String?
@@ -55,6 +55,7 @@ public struct DeviceSummary: Codable {
     var trackingAuthorizationStatus: String?
 }
 
+
 /// Generic app and device data often collected for fraud and marketing analysis.
 /// This is not an exhaustive list and includes mostly things available to all app types.
 ///
@@ -73,7 +74,7 @@ public struct DeviceSummary: Codable {
 /// For promo code fraud prevention, use DCDevice. It provides 2 bits that are unique to the device managed through Apple.
 /// https://developer.apple.com/documentation/devicecheck/dcdevice
 ///
-public final class MarketingData: NSObject {
+public final class MarketingData: Sendable {
     
     let networkMonitor = NetworkMonitor.shared
     let idfaSource: IDFASource
@@ -82,7 +83,7 @@ public final class MarketingData: NSObject {
         self.idfaSource = idfaSource
     }
     
-    public override init() {
+    public init() {
         self.idfaSource = IDFAMock()
     }
     
@@ -91,7 +92,8 @@ public final class MarketingData: NSObject {
         let summary = await summary(config)
         
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
+        encoder.outputFormatting = ([.prettyPrinted, .sortedKeys])
+        
         do {
             let data = try encoder.encode(summary)
             if let string = String(data: data, encoding: .utf8) {
@@ -111,7 +113,7 @@ public final class MarketingData: NSObject {
             dataStore = UserDefaultsDataStore()
         }
         
-        var summary = DeviceSummary(sdkVersion: "1.0.0", creationTimestamp: String(Date().timeIntervalSince1970))
+        var summary = DeviceSummary(sdkVersion: "1.0.0", requestTimestamp: String(Date().timeIntervalSince1970))
 
         if config.includeAppDetails {
             summary.executableName = BundleDataCollector.readExecutableName()

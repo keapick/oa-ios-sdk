@@ -4,8 +4,14 @@
 //
 //  Created by echo on 11/24/24.
 //
-
+#if canImport(UIKit)
 import UIKit
+#endif
+
+#if canImport(AppKit)
+import AppKit
+#endif
+
 import Marketing
 
 struct ScreenDimensions: Codable {
@@ -15,15 +21,21 @@ struct ScreenDimensions: Codable {
 }
 
 /// Reads Screen data
-class ScreenDimensionCollector: NSObject {
+class ScreenDimensionCollector {
     
     /// Reads screen data using a deprecated API
     /// https://developer.apple.com/documentation/uikit/uiscreen/1617815-mainscreen
     @MainActor func readScreenDimensions() -> ScreenDimensions {
         
-        let scale = UIScreen.main.scale
-        let width = UIScreen.main.bounds.size.width * scale
-        let height = UIScreen.main.bounds.size.height * scale
+        var scale = 0.0
+        var width = 0.0
+        var height = 0.0
+        
+        #if canImport(UIKit)
+        scale = UIScreen.main.scale
+        width = UIScreen.main.bounds.size.width * scale
+        height = UIScreen.main.bounds.size.height * scale
+        #endif
         
         return ScreenDimensions(width: width, height: height, scale: scale)
     }

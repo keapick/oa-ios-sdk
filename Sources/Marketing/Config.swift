@@ -31,7 +31,7 @@ struct ConfigDTO: Codable, Equatable {
 
 // JSON config file to control behavior of this library
 // Helpful when supporting platforms such as React Native, Unity or handling early lifecycle events
-public struct Config: Equatable {
+public struct Config: Equatable, Sendable {
         
     public let version: String
     public var logLevel: LogLevel = .debug
@@ -74,7 +74,7 @@ public struct Config: Equatable {
     // Note that IDFA is a build time option.
     // This is because Apple has strict rules around it and many apps can't even link it.
     
-    init(version: String) {
+    public init(version: String) {
         self.version = version
     }
     
@@ -124,37 +124,6 @@ public struct Config: Equatable {
             }
         }
         return Config(version: "1.0.0")
-    }
-    
-    // for integration testing
-    public static func configAllDataCollectionDisabled() -> Config {
-        var rules = Config(version: "1.0.0")
-        rules.useUserDefaults = false
-        rules.includeAppDetails = false
-        rules.includeDeviceDetails = false
-        rules.includeLocale = false
-        rules.includeAttributionToken = false
-        rules.includeAppleReceipt = false
-        rules.includeNetworkInformation = false
-        rules.includeFileCreationDates = false
-        rules.includeIDFV = false
-        return rules
-    }
-    
-    // for integration testing
-    public static func configAllDataCollectionEnabled() -> Config {
-        var rules = Config(version: "1.0.0")
-        rules.useUserDefaults = true
-        rules.includeAppDetails = true
-        rules.includeDeviceDetails = true
-        rules.includeLocale = true
-        // lets exclude this as it's slow on unit tests
-        rules.includeAttributionToken = false
-        rules.includeAppleReceipt = true
-        rules.includeNetworkInformation = true
-        rules.includeFileCreationDates = true
-        rules.includeIDFV = true
-        return rules
     }
     
     // unit tests do not store resources in the main bundle, use the module bundle instead

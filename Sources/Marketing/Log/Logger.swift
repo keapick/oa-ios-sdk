@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LogLevel: Int, Codable {
+public enum LogLevel: Int, Codable, Sendable {
     case verbose = 0
     case debug
     case warning
@@ -27,7 +27,7 @@ struct DefaultDestination: LogDestination {
 
 /// Many apps have their own existing logging system.
 /// This SDK logger allows redirecting log messages to whatever system the App dev chooses.
-public final class Logger: NSObject {
+public final class Logger {
     
     // TODO: is there a more Swift Concurrency friendly singleton. This is using an internal isolation queue.
     nonisolated(unsafe) public static let shared: Logger = Logger()
@@ -36,8 +36,7 @@ public final class Logger: NSObject {
     lazy var destination : LogDestination = DefaultDestination()
     lazy var queue = DispatchQueue(label: "dev.openattribution.logqueue")
     
-    public override init() {
-        super.init()
+    public init() {
         self.setLogLevel(logLevel: Config.defaultConfig().logLevel)
     }
     

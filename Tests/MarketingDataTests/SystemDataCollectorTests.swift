@@ -26,12 +26,12 @@ final class SystemDataCollectorTests: XCTestCase {
         XCTAssertTrue("en_US" == locale)
     }
 
-    func testReadIdentifierForVendor() throws {
-//        let idfv = await SystemDataCollector.readIdentifierForVendor()
-//
-//        // idfv's are 36 chars long
-//        XCTAssertNotNil(idfv)
-//        XCTAssertTrue(idfv.count == 36)
+    func testReadIdentifierForVendor() async throws {
+        let idfv = await SystemDataCollector.readIdentifierForVendor()
+
+        // idfv's are 36 chars long
+        XCTAssertNotNil(idfv)
+        XCTAssertTrue(idfv.count == 36)
     }
     
     func testReadSysctlSystemInfo() throws {

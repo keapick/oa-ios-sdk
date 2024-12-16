@@ -15,7 +15,9 @@ import Marketing
 /// Does NOT request access to IDFA or show the ATT prompt!
 ///
 /// Apps using this code will need to display the ATT prompt and provide a Privacy Manifest.
-public class IDFACollector: IDFASource {
+public final class IDFACollector: IDFASource, Sendable {
+    
+    public init() { }
     
     /// Reads the advertising identifier
     /// This API requires disclosure and ATT permission for a valid response
@@ -38,22 +40,19 @@ public class IDFACollector: IDFASource {
     ///
     /// https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/authorizationstatus
     public func readAppTrackingTransparencyOptInStatus() -> String? {
-        if #available(iOS 14.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, macOS 11.0, *) {
-            var status: String
-            switch ATTrackingManager.trackingAuthorizationStatus {
-            case .notDetermined:
-                status = "notDetermined"
-            case .restricted:
-                status = "restricted"
-            case .denied:
-                status = "denied"
-            case .authorized:
-                status = "authorized"
-            @unknown default:
-                status = "unknown"
-            }
-            return status
+        var status: String
+        switch ATTrackingManager.trackingAuthorizationStatus {
+        case .notDetermined:
+            status = "notDetermined"
+        case .restricted:
+            status = "restricted"
+        case .denied:
+            status = "denied"
+        case .authorized:
+            status = "authorized"
+        @unknown default:
+            status = "unknown"
         }
-        return "unavailable"
+        return status
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 // Used to dependency inject IDFA and AppTrackingTransparency
-public protocol IDFASource {
+public protocol IDFASource: Sendable {
     func readIdentifierForAdvertiser() -> String?
     func readAppTrackingTransparencyOptInStatus() -> String?
 }

@@ -10,7 +10,7 @@ let package = Package(
         .tvOS(.v15),
         .macCatalyst(.v15),
         .visionOS(.v1),
-        //.macOS(.v13)
+        .macOS(.v13)
     ],
     products: [
         // Marketing contains any code that does NOT require privacy disclosures. Mainly functional or utility features.

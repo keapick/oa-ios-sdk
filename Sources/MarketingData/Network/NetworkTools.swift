@@ -11,7 +11,7 @@ public enum NetworkError: Error {
     case getifaddrsFailure // failure to read network interfaces
 }
 
-public struct NetworkInterface: Codable {
+public struct NetworkInterface: Codable, Sendable {
     public let name: String
     public let type: String
     public let address: String

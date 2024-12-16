@@ -19,21 +19,17 @@ final class AttributionTokenCollectorTests: XCTestCase {
     }
 
     func testReadAppleAttributionToken() async throws {
-        if #available(iOS 14.3, macCatalyst 14.3, visionOS 1.0, *) {
-            let token = await AttributionTokenCollector(dataStore: NullDataStore()).requestToken()
-            
-            // Apple attribution tokens are not availble on simulators
-            XCTAssertNil(token)
-        }
+        let token = await AttributionTokenCollector(dataStore: NullDataStore()).requestToken()
+        
+        // Apple attribution tokens are not availble on simulators
+        XCTAssertNil(token)
     }
     
     // This test is very slow since Unit tests have no attribution token
-//    func testReadAppleAttributionTokenWithRetries() async throws {
-//        if #available(iOS 14.3, macCatalyst 14.3, visionOS 1.0, *) {
-//            let token = await AttributionTokenCollector().requestAppleAttributionToken(forceFresh: false, dataStore: NullDataStore())
-//            
-//            // Apple attribution tokens are not availble on simulators
-//            XCTAssertNil(token)
-//        }
-//    }
+    func testReadAppleAttributionTokenWithRetries() async throws {
+        let token = await AttributionTokenCollector(dataStore: NullDataStore()).requestAppleAttributionToken(forceFresh: false)
+        
+        // Apple attribution tokens are not availble on simulators
+        XCTAssertNil(token)
+    }
 }
