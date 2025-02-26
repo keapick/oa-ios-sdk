@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  oa-ios-sdk
+//  Event.swift
+//  MarketingData
 //
 //  Created by echo on 12/14/24.
 //
@@ -8,35 +8,74 @@
 import Foundation
 import SwiftData
 
-//enum EventMigrationPlan: SchemaMigrationPlan {
-//    
-//    
-//    static var schemas: [any VersionedSchema.Type] {
-//        [ServerVersionSchemaV1.self, ServerVersionSchemaV2.self]
-//    }
-//}
+// Apple hasn't made this Swift 6 compatible yet
+// https://developer.apple.com/forums/thread/756802
+@available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
+extension MigrationStage: @unchecked @retroactive Sendable { }
 
+@available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
+extension Schema.Version: @unchecked @retroactive Sendable { }
+
+// Sample migration code, easier to setup up front than to retrofit it
+//@available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
+//enum EventMigrationPlan: SchemaMigrationPlan {
+//    static var schemas: [any VersionedSchema.Type] {
+//        [EventVersionSchemaV1.self, EventVersionSchemaV2.self]
+//    }
+//    
+//    static var stages: [MigrationStage] {
+//        [migrateV1toV2]
+//    }
+//    
+//    static let migrateV1toV2 = MigrationStage.custom(
+//        fromVersion: EventVersionSchemaV1.self,
+//        toVersion: EventVersionSchemaV2.self,
+//        willMigrate: nil,
+//        didMigrate: { context in
+//            
+//        }
+//    )
+//}
+//
 //@available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
-//public enum EventVersionSchemaV1: VersionedSchema {
+//public enum EventVersionSchemaV2: VersionedSchema {
 //    public static var versionIdentifier: Schema.Version {
-//        return Schema.Version(1, 0, 0)
+//        return Schema.Version(2, 0, 0)
 //    }
 //    
 //    public static var models: [any PersistentModel.Type] {
-//        [Server.self]
+//        [Event.self]
 //    }
 //    
 //    @Model
-//    public final class Server {
-//        @Attribute(.unique) public var macAddress: String
-//        public var name: String
+//    public final class Event {
+//        @Attribute(.unique) public var id: UUID
 //        
-//        // sort by most recently accessed
-//        public var lastUsed: Date?
-//        
-//        public init(macAddress: String, name: String) {
-//            self.macAddress = macAddress
-//            self.name = name
+//        public init() {
+//
 //        }
 //    }
 //}
+
+@available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
+public enum EventVersionSchemaV1: VersionedSchema {
+    public static var versionIdentifier: Schema.Version {
+        return Schema.Version(1, 0, 0)
+    }
+    
+    public static var models: [any PersistentModel.Type] {
+        [Event.self]
+    }
+    
+    @Model
+    public final class Event {
+        @Attribute(.unique) public var key: UUID
+
+        // local event timestamp
+        @Attribute public var timestamp: Date
+        
+        public init() {
+
+        }
+    }
+}
