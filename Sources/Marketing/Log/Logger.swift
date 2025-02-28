@@ -37,7 +37,7 @@ public final class Logger {
     lazy var queue = DispatchQueue(label: "dev.openattribution.logqueue")
     
     public init() {
-        self.setLogLevel(logLevel: Config.defaultConfig().logLevel)
+        self.setLogLevel(logLevel: Config.shared.logLevel)
     }
     
     public func setDestination(destination: LogDestination) {

@@ -27,6 +27,10 @@ struct ConfigDTO: Codable, Equatable {
     var includeNetworkInformation: Bool?
     var includeFileCreationDates: Bool?
     var includeIDFV: Bool?
+    
+    // short link resolution using dub
+    var dubLinkService: String?
+    var dubPublishableKey: String?
 }
 
 // JSON config file to control behavior of this library
@@ -74,6 +78,10 @@ public struct Config: Equatable, Sendable {
     // Note that IDFA is a build time option.
     // This is because Apple has strict rules around it and many apps can't even link it.
     
+    // optional dub configuration
+    public var dubLinkService: String?
+    public var dubPublishableKey: String?
+    
     public init(version: String) {
         self.version = version
     }
@@ -84,7 +92,6 @@ public struct Config: Equatable, Sendable {
         if let logLevel = dto.logLevel {
             self.logLevel = logLevel
         }
-        
         
         // Privacy rules
         if let useUserDefaults = dto.useUserDefaults {
@@ -114,10 +121,14 @@ public struct Config: Equatable, Sendable {
         if let includeIDFV = dto.includeIDFV {
             self.includeIDFV = includeIDFV
         }
+        
+        self.dubLinkService = dto.dubLinkService
+        self.dubPublishableKey = dto.dubPublishableKey
     }
 
-    // TODO: cache the default config?
-    public static func defaultConfig() -> Config {
+    // Default config file. Assumed to be "config.json" in the main bundle
+    public static let shared = Config.defaultConfig()
+    static func defaultConfig() -> Config {
         if let url = Bundle.main.url(forResource: "config", withExtension: "json") {
             if let config = loadConfig(from: url) {
                 return config
@@ -126,14 +137,15 @@ public struct Config: Equatable, Sendable {
         return Config(version: "1.0.0")
     }
     
-    // unit tests do not store resources in the main bundle, use the module bundle instead
-    static func loadConfig(from fileURL: URL) -> Config? {
+    // Loads the config from a URL
+    public static func loadConfig(from fileURL: URL) -> Config? {
         do {
             let data = try Data(contentsOf: fileURL)
             let dto = try JSONDecoder().decode(ConfigDTO.self, from: data)
             return Config(from: dto)
         } catch {
-            Logger.shared.logError(message:"Failed to load config: \(error)")
+            // Cannot use the logger prior to the logger initializing
+            print("Failed to load config file: \(error)")
         }
         return nil
     }

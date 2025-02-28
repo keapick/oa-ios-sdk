@@ -17,7 +17,6 @@ public enum LinkingError: Error {
 }
 
 /// Helper methods for creation and consumption links
-/// TODO: consider integration with link shorteners
 public struct Linking {
     
     // Most browsers cannot handle URLs over ~2k characters

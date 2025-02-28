@@ -16,6 +16,9 @@ extension MigrationStage: @unchecked @retroactive Sendable { }
 @available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
 extension Schema.Version: @unchecked @retroactive Sendable { }
 
+@available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
+public typealias Event = EventVersionSchemaV1.Event
+
 // Sample migration code, easier to setup up front than to retrofit it
 //@available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
 //enum EventMigrationPlan: SchemaMigrationPlan {
@@ -72,10 +75,14 @@ public enum EventVersionSchemaV1: VersionedSchema {
         @Attribute(.unique) public var key: UUID
 
         // local event timestamp
-        @Attribute public var timestamp: Date
+        @Attribute public var timestamp: Double
+        
+        // saved to server?
+        @Attribute public var synced: Bool = false
         
         public init() {
-
+            self.key = UUID()
+            self.timestamp = Date.now.timeIntervalSince1970
         }
     }
 }
