@@ -23,6 +23,11 @@ let package = Package(
             name: "MarketingData",
             targets: ["MarketingData"]
         ),
+        // MarketingDataStore brings in SwiftData for persistent device side link and event history.
+        .library(
+            name: "MarketingDataStore",
+            targets: ["MarketingDataStore"]
+        ),
         // MarketingDataIDFA adds an IDFA helper class for use with MarketingData.
         // App must show the ATT prompt and include a privacy manifest.
         .library(
@@ -41,6 +46,8 @@ let package = Package(
                 .linkedFramework("AdServices", .when(platforms: [.iOS, .macCatalyst, .visionOS]))
             ]
         ),
+        .target(
+            name: "MarketingDataStore"),
         .target(
             name: "MarketingDataIDFA",
             dependencies: ["MarketingData"],
@@ -66,6 +73,10 @@ let package = Package(
         .testTarget(
             name: "MarketingDataTests",
             dependencies: ["MarketingData"]
+        ),
+        .testTarget(
+            name: "MarketingDataStoreTests",
+            dependencies: ["MarketingDataStore"]
         ),
         .testTarget(
             name: "MarketingDataIDFATests",

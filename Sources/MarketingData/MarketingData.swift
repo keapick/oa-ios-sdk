@@ -106,11 +106,11 @@ public final class MarketingData: Sendable {
     
     // marketing data struct, can be used to generate request JSONs
     public func summary(_ config: Config) async -> DeviceSummary {
-        var dataStore: DataStore = NullDataStore()
+        var keyValueStore: KeyValueStore = NullKeyValueStore()
         
         // UserDefaults requires a privacy disclosure but is helpful in caching expensive or one time calls
         if config.useUserDefaults {
-            dataStore = UserDefaultsDataStore()
+            keyValueStore = DefaultKeyValueStore()
         }
         
         var summary = DeviceSummary(sdkVersion: "1.0.0", requestTimestamp: String(Date().timeIntervalSince1970))
@@ -129,7 +129,7 @@ public final class MarketingData: Sendable {
             summary.systemVersion = await SystemDataCollector.readSystemVersion()
             summary.utsname = SystemDataCollector.readUtsnameSystemInfo()
             summary.sysctl = SystemDataCollector.readSysctlSystemInfo()
-            summary.userAgent = await UserAgentCollector(dataStore: dataStore).readCachedUserAgent()
+            summary.userAgent = await UserAgentCollector(keyValueStore: keyValueStore).readCachedUserAgent()
             summary.screen = await ScreenDimensionCollector().readScreenDimensions()
         }
         
@@ -138,7 +138,7 @@ public final class MarketingData: Sendable {
         }
         
         if config.includeAttributionToken {
-            summary.appleAttributionToken = await AttributionTokenCollector(dataStore: dataStore).requestAppleAttributionToken(forceFresh: false)
+            summary.appleAttributionToken = await AttributionTokenCollector(keyValueStore: keyValueStore).requestAppleAttributionToken(forceFresh: false)
         }
         
         if config.includeAppleReceipt {

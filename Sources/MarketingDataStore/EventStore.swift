@@ -11,9 +11,7 @@ import SwiftData
 // Stores events in SwiftData
 @available(macOS 14, iOS 17, tvOS 17, watchOS 10, *)
 public struct EventStore: Sendable {
-    
-    public static let shared = MarketingData()
-    
+        
     // For direct access to the ModelContainer, allows SwiftUI Views to use Query
     public let container: ModelContainer
     

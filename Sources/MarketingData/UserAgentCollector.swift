@@ -20,9 +20,9 @@ class UserAgentCollector {
     lazy var webkit: WKWebView = WKWebView(frame: CGRect.zero)
     #endif
     
-    let dataStore: DataStore
-    init(dataStore: DataStore) {
-        self.dataStore = dataStore
+    let keyValueStore: KeyValueStore
+    init(keyValueStore: KeyValueStore) {
+        self.keyValueStore = keyValueStore
     }
     
     /// Fetching the user agent is a rather expensive call, therefore cache the result. It only changes with OS updates.
@@ -31,10 +31,10 @@ class UserAgentCollector {
         let userAgentStringKey = "dev.openattribution.userAgentString"
         
         let currentBuildVersion = SystemDataCollector.readSysctlSystemInfo().osversion
-        let savedBuildVersion = await dataStore.fetchString(key: buildVersionKey)
+        let savedBuildVersion = await keyValueStore.fetchString(key: buildVersionKey)
         
         // Use saved user agent if it's still valid
-        if let userAgentString = await dataStore.fetchString(key: userAgentStringKey) {
+        if let userAgentString = await keyValueStore.fetchString(key: userAgentStringKey) {
             if currentBuildVersion == savedBuildVersion {
                 Logger.shared.logVerbose(message: "Using cached user agent string")
                 return userAgentString
@@ -43,8 +43,8 @@ class UserAgentCollector {
         
         // Otherwise fetch a fresh user agent
         if let currentUserAgentString = self.readUserAgentFromWebViewViaKVO() {
-            await dataStore.saveString(key: buildVersionKey, value: currentBuildVersion)
-            await dataStore.saveString(key: userAgentStringKey, value: currentUserAgentString)
+            await keyValueStore.saveString(key: buildVersionKey, value: currentBuildVersion)
+            await keyValueStore.saveString(key: userAgentStringKey, value: currentUserAgentString)
             
             Logger.shared.logVerbose(message: "Using fresh user agent string")
             return currentUserAgentString

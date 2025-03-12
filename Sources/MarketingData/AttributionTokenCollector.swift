@@ -27,9 +27,9 @@ public class AttributionTokenCollector {
     let appleTokenKey = "dev.openattribution.appleToken"
     let appleTokenTimeStampKey = "dev.openattribution.appleTokenTimeStamp"
     
-    let dataStore: DataStore
-    public init(dataStore: DataStore) {
-        self.dataStore = dataStore
+    let keyValueStore: KeyValueStore
+    public init(keyValueStore: KeyValueStore) {
+        self.keyValueStore = keyValueStore
     }
     
     /// Requests an Apple Attribution token for S2S integration.
@@ -39,8 +39,8 @@ public class AttributionTokenCollector {
     /// With retries, fetching a new Apple attribution token  can take upwards of 15s, normally it's much faster.
     public func requestAppleAttributionToken(forceFresh: Bool) async -> AttributionToken? {
         if forceFresh != true,
-            let token = await dataStore.fetchString(key: self.appleTokenKey),
-            let timestamp = await dataStore.fetchString(key: self.appleTokenTimeStampKey) {
+            let token = await keyValueStore.fetchString(key: self.appleTokenKey),
+            let timestamp = await keyValueStore.fetchString(key: self.appleTokenTimeStampKey) {
             
             Logger.shared.logVerbose(message: "Using previously cached Apple attribution token.")
             return AttributionToken(token: token, collectionTimestamp: timestamp)
@@ -54,8 +54,8 @@ public class AttributionTokenCollector {
                     Logger.shared.logVerbose(message: "Using fresh Apple attribution token.")
 
                     let timestamp = String(Date().timeIntervalSince1970)
-                    await dataStore.saveString(key: self.appleTokenKey, value: token)
-                    await dataStore.saveString(key: self.appleTokenTimeStampKey, value: timestamp)
+                    await keyValueStore.saveString(key: self.appleTokenKey, value: token)
+                    await keyValueStore.saveString(key: self.appleTokenTimeStampKey, value: timestamp)
                     return AttributionToken(token: token, collectionTimestamp: timestamp)
                 }
                 attemptCount += 1

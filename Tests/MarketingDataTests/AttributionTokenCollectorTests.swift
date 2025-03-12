@@ -19,7 +19,7 @@ final class AttributionTokenCollectorTests: XCTestCase {
     }
 
     func testReadAppleAttributionToken() async throws {
-        let token = await AttributionTokenCollector(dataStore: NullDataStore()).requestToken()
+        let token = await AttributionTokenCollector(keyValueStore: NullKeyValueStore()).requestToken()
         
         // Apple attribution tokens are not availble on simulators
         XCTAssertNil(token)
@@ -27,7 +27,7 @@ final class AttributionTokenCollectorTests: XCTestCase {
     
     // This test is very slow since Unit tests have no attribution token
     func testReadAppleAttributionTokenWithRetries() async throws {
-        let token = await AttributionTokenCollector(dataStore: NullDataStore()).requestAppleAttributionToken(forceFresh: false)
+        let token = await AttributionTokenCollector(keyValueStore: NullKeyValueStore()).requestAppleAttributionToken(forceFresh: false)
         
         // Apple attribution tokens are not availble on simulators
         XCTAssertNil(token)

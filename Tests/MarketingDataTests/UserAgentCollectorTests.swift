@@ -19,7 +19,7 @@ final class UserAgentCollectorTests: XCTestCase {
     }
 
     func testReadUserAgentFromWebViewViaKVO() async throws {
-        if let agent = await UserAgentCollector(dataStore: NullDataStore()).readUserAgentFromWebViewViaKVO() {
+        if let agent = await UserAgentCollector(keyValueStore: NullKeyValueStore()).readUserAgentFromWebViewViaKVO() {
             XCTAssertTrue(agent.contains("Mozilla/5.0"))
         } else {
             XCTFail()
@@ -27,7 +27,7 @@ final class UserAgentCollectorTests: XCTestCase {
     }
     
     func testReadUserAgentFromWebViewViaJS() async throws {
-        if let agent = await UserAgentCollector(dataStore: NullDataStore()).readUserAgentFromWebViewViaJS() {
+        if let agent = await UserAgentCollector(keyValueStore: NullKeyValueStore()).readUserAgentFromWebViewViaJS() {
             XCTAssertTrue(agent.contains("Mozilla/5.0"))
         } else {
             XCTFail()
@@ -36,8 +36,8 @@ final class UserAgentCollectorTests: XCTestCase {
     
     func testUserAgentReadMethodsAreEquivalent() async throws {
         // Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148
-        if let agent1 = await UserAgentCollector(dataStore: NullDataStore()).readUserAgentFromWebViewViaJS(),
-            let agent2 = await UserAgentCollector(dataStore: NullDataStore()).readUserAgentFromWebViewViaKVO() {
+        if let agent1 = await UserAgentCollector(keyValueStore: NullKeyValueStore()).readUserAgentFromWebViewViaJS(),
+            let agent2 = await UserAgentCollector(keyValueStore: NullKeyValueStore()).readUserAgentFromWebViewViaKVO() {
             
             XCTAssertTrue(agent1 == agent2)
         } else {

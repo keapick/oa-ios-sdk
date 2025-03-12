@@ -28,9 +28,12 @@ struct ConfigDTO: Codable, Equatable {
     var includeFileCreationDates: Bool?
     var includeIDFV: Bool?
     
-    // short link resolution using dub
+    var openAttributionService: String?
+    var openAttributionPublishableKey: String?
+    
     var dubLinkService: String?
     var dubPublishableKey: String?
+    var dubSupportedDomains: [String]?
 }
 
 // JSON config file to control behavior of this library
@@ -78,9 +81,16 @@ public struct Config: Equatable, Sendable {
     // Note that IDFA is a build time option.
     // This is because Apple has strict rules around it and many apps can't even link it.
     
-    // optional dub configuration
+    // open attribution configuration
+    // https://openattribution.dev/
+    public var openAttributionService: String?
+    public var openAttributionPublishableKey: String?
+    
+    // dub.co configuration
+    // https://dub.co
     public var dubLinkService: String?
     public var dubPublishableKey: String?
+    public var dubSupportedDomains: [String] = []
     
     public init(version: String) {
         self.version = version
@@ -122,8 +132,14 @@ public struct Config: Equatable, Sendable {
             self.includeIDFV = includeIDFV
         }
         
+        // open attribution config
+        self.openAttributionService = dto.openAttributionService
+        self.openAttributionPublishableKey = dto.openAttributionPublishableKey
+        
+        // dub.co config
         self.dubLinkService = dto.dubLinkService
         self.dubPublishableKey = dto.dubPublishableKey
+        self.dubSupportedDomains = dto.dubSupportedDomains ?? []
     }
 
     // Default config file. Assumed to be "config.json" in the main bundle
