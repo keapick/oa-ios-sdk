@@ -77,18 +77,24 @@ struct DeviceSummary: Codable, Sendable {
 public final class MarketingData: Sendable {
     
     let networkMonitor = NetworkMonitor.shared
+    
+    let config: Config
     let idfaSource: IDFASource
     
-    public init(idfaSource: IDFASource) {
+    public init(_ config: Config, idfaSource: IDFASource) {
+        self.config = config
         self.idfaSource = idfaSource
     }
     
-    public init() {
+    public init(_ config: Config) {
+        self.config = config
         self.idfaSource = IDFAMock()
     }
     
     // marketing data struct, can be used to generate request JSONs
-    func summary(_ config: Config) async -> DeviceSummary {
+    func summary(_ config: Config? = nil) async -> DeviceSummary {
+        let config = config ?? self.config
+        
         var keyValueStore: KeyValueStore = NullKeyValueStore()
         
         // UserDefaults requires a privacy disclosure but is helpful in caching expensive or one time calls
@@ -159,8 +165,8 @@ public final class MarketingData: Sendable {
         return summary
     }
     
-    // sample event JSON
-    public func jsonSummary(_ config: Config) async -> String? {
+    // Converts the DeviceSummary into JSON
+    public func jsonSummary(_ config: Config? = nil) async -> String? {
         let summary = await summary(config)
         
         let encoder = JSONEncoder()

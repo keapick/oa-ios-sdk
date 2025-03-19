@@ -79,7 +79,7 @@ struct MarketingDataTests {
      
      */
     @Test func jsonPrivacy() async throws {
-        if let string = await MarketingData().jsonSummary(Config()) {
+        if let string = await MarketingData(Config()).jsonSummary() {
             print("\(string)")
             
             // metadata
@@ -105,7 +105,7 @@ struct MarketingDataTests {
      
      */
     @Test func jsonPrivacyAllDisabled() async throws {
-        if let string = await MarketingData().jsonSummary(MarketingDataTests.configAllDataCollectionDisabled()) {
+        if let string = await MarketingData(Config()).jsonSummary(MarketingDataTests.configAllDataCollectionDisabled()) {
             print("\(string)")
             
             // metadata
@@ -184,7 +184,7 @@ struct MarketingDataTests {
      */
     @Test func jsonPrivacyAllEnabled() async throws {
         // Slow in unit tests as the attribution token goes through all retries, takes 15s
-        if let string = await MarketingData().jsonSummary(MarketingDataTests.configAllDataCollectionEnabled()) {
+        if let string = await MarketingData(Config()).jsonSummary(MarketingDataTests.configAllDataCollectionEnabled()) {
             print("\(string)")
             
             // metadata
