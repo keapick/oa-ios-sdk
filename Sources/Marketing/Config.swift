@@ -92,8 +92,8 @@ public struct Config: Equatable, Sendable {
     public var dubPublishableKey: String?
     public var dubSupportedDomains: [String] = []
     
-    public init(version: String) {
-        self.version = version
+    public init() {
+        self.version = "1.0.0"
     }
     
     init(from dto: ConfigDTO) {
@@ -150,7 +150,7 @@ public struct Config: Equatable, Sendable {
                 return config
             }
         }
-        return Config(version: "1.0.0")
+        return Config()
     }
     
     // Loads the config from a URL

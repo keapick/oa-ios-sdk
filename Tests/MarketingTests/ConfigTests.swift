@@ -21,7 +21,7 @@ struct ConfigTests {
     }
     
     static func configAllDataCollectionDisabled() -> Config {
-        var rules = Config(version: "1.0.0")
+        var rules = Config()
         rules.useUserDefaults = false
         rules.includeAppDetails = false
         rules.includeDeviceDetails = false
@@ -35,7 +35,7 @@ struct ConfigTests {
     }
     
     static func configAllDataCollectionEnabled() -> Config {
-        var rules = Config(version: "1.0.0")
+        var rules = Config()
         rules.useUserDefaults = true
         rules.includeAppDetails = true
         rules.includeDeviceDetails = true
@@ -56,7 +56,7 @@ struct ConfigTests {
     
     @Test func testLoadConfig() async throws {
         if let url = urlForConfig() {
-            let config = Config(version: "1.0.0")
+            let config = Config()
             let loaded = Config.loadConfig(from: url)
             
             #expect(config == loaded)
@@ -75,7 +75,7 @@ struct ConfigTests {
     
     @Test func testLoadPrivacyRules() async throws {
         if let url = urlForConfig() {
-            let rules = Config(version: "1.0.0")
+            let rules = Config()
             let loaded = Config.loadConfig(from: url)
             
             #expect(loaded == rules)
@@ -108,7 +108,7 @@ struct ConfigTests {
     
     @Test func testConfigExtraFields() async throws {
         if let url = urlForConfig(named: "config_unsupported_fields") {
-            let rules = Config(version: "1.0.0")
+            let rules = Config()
             let loaded = Config.loadConfig(from: url)
             
             #expect(loaded == rules)

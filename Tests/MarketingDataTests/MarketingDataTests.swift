@@ -14,7 +14,7 @@ struct MarketingDataTests {
     // Have to duplicate these utility functions...
     // ConfigTests are in a different target.
     static func configAllDataCollectionDisabled() -> Config {
-        var rules = Config(version: "1.0.0")
+        var rules = Config()
         rules.useUserDefaults = false
         rules.includeAppDetails = false
         rules.includeDeviceDetails = false
@@ -28,7 +28,7 @@ struct MarketingDataTests {
     }
     
     static func configAllDataCollectionEnabled() -> Config {
-        var rules = Config(version: "1.0.0")
+        var rules = Config()
         rules.useUserDefaults = true
         rules.includeAppDetails = true
         rules.includeDeviceDetails = true
@@ -79,7 +79,7 @@ struct MarketingDataTests {
      
      */
     @Test func jsonPrivacy() async throws {
-        if let string = await MarketingData().jsonSummary(Config(version: "1.0.0")) {
+        if let string = await MarketingData().jsonSummary(Config()) {
             print("\(string)")
             
             // metadata
