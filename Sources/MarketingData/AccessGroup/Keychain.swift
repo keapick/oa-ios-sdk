@@ -10,10 +10,10 @@ import Marketing
 
 /// Keychain helper methods for AccessGroupCollector
 /// Do NOT use this for passwords! Access control is NOT set.
-public struct Keychain {
+struct Keychain {
     
     /// Deletes an entry from keychain
-    public static func deleteFromKeychain(service: String, key: String) {
+    static func deleteFromKeychain(service: String, key: String) {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -29,7 +29,7 @@ public struct Keychain {
     
     /// Saves a string to keychain, only when device is unlocked
     /// This call blocks threads, call it async.
-    public static func saveStringToKeychain(string: String, service: String, key: String) {
+    static func saveStringToKeychain(string: String, service: String, key: String) {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -47,7 +47,7 @@ public struct Keychain {
     }
     
     /// Reads a single string from keychain.
-    public static func readStringFromKeychain(service: String, key: String) -> String? {
+    static func readStringFromKeychain(service: String, key: String) -> String? {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -72,7 +72,7 @@ public struct Keychain {
     }
     
     /// Reads access group from keychain.
-    public static func readAccessGroupFromKeychain(service: String) -> String? {
+    static func readAccessGroupFromKeychain(service: String) -> String? {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,

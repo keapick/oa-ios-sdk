@@ -1,6 +1,6 @@
 //
 //  MarketingObjC.swift
-//  oa-ios-sdk
+//  Marketing
 //
 //  Created by echo on 2/25/25.
 //
@@ -18,4 +18,6 @@ import Foundation
             Logger.shared.logDebug(message: string)
         }
     }
+    
+    // link resolution
 }

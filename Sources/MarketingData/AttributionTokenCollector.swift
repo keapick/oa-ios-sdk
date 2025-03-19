@@ -13,13 +13,13 @@ import AdServices
 
 import Marketing
 
-public struct AttributionToken: Codable, Sendable {
+struct AttributionToken: Codable, Sendable {
     let token: String
     let collectionTimestamp: String
 }
 
 @MainActor
-public class AttributionTokenCollector {
+class AttributionTokenCollector {
         
     /// Apple recommends trying up to 3 times with a 5s retry interval
     let maxTries = 3
@@ -28,7 +28,7 @@ public class AttributionTokenCollector {
     let appleTokenTimeStampKey = "dev.openattribution.appleTokenTimeStamp"
     
     let keyValueStore: KeyValueStore
-    public init(keyValueStore: KeyValueStore) {
+    init(keyValueStore: KeyValueStore) {
         self.keyValueStore = keyValueStore
     }
     
@@ -37,10 +37,10 @@ public class AttributionTokenCollector {
     /// https://developer.apple.com/documentation/AdServices/
     ///
     /// With retries, fetching a new Apple attribution token  can take upwards of 15s, normally it's much faster.
-    public func requestAppleAttributionToken(forceFresh: Bool) async -> AttributionToken? {
+    func requestAppleAttributionToken(forceFresh: Bool) async -> AttributionToken? {
         if forceFresh != true,
-            let token = await keyValueStore.fetchString(key: self.appleTokenKey),
-            let timestamp = await keyValueStore.fetchString(key: self.appleTokenTimeStampKey) {
+           let token = await keyValueStore.fetchString(key: self.appleTokenKey),
+           let timestamp = await keyValueStore.fetchString(key: self.appleTokenTimeStampKey) {
             
             Logger.shared.logVerbose(message: "Using previously cached Apple attribution token.")
             return AttributionToken(token: token, collectionTimestamp: timestamp)

@@ -28,10 +28,14 @@ final class SystemDataCollectorTests: XCTestCase {
 
     func testReadIdentifierForVendor() async throws {
         let idfv = await SystemDataCollector.readIdentifierForVendor()
-
-        // idfv's are 36 chars long
         XCTAssertNotNil(idfv)
+        
+        #if os(macOS)
+        // macOS does not have an idfv
+        XCTAssertTrue(idfv.count == 0)
+        #else
         XCTAssertTrue(idfv.count == 36)
+        #endif
     }
     
     func testReadSysctlSystemInfo() throws {

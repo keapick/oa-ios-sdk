@@ -7,14 +7,14 @@
 
 import Network
 
-public struct NetworkInterfaceSummary: Codable, Sendable {
-    public let name: String
-    public let type: String
+struct NetworkInterfaceSummary: Codable, Sendable {
+    let name: String
+    let type: String
 }
 
-public struct NetworkPathSummary: Codable, Sendable {
-    public let status: String
-    public let interfaces: [NetworkInterfaceSummary]
+struct NetworkPathSummary: Codable, Sendable {
+    let status: String
+    let interfaces: [NetworkInterfaceSummary]
 }
 
 /// Monitors network connectivity.
@@ -24,18 +24,18 @@ public struct NetworkPathSummary: Codable, Sendable {
 /// Consider retries, offline storage, etc
 ///
 /// https://developer.apple.com/documentation/network/nwpathmonitor
-public final class NetworkMonitor: Sendable {
+final class NetworkMonitor: Sendable {
     
-    public static let shared: NetworkMonitor = NetworkMonitor()
+    static let shared: NetworkMonitor = NetworkMonitor()
     
     let queue = DispatchQueue(label:"dev.openattribution.networkMonitor")
     let monitor = NWPathMonitor()
     
-    public init() {
+    init() {
         self.monitor.start(queue: self.queue)
     }
     
-    public func readCurrentPathData() -> NetworkPathSummary {
+    func readCurrentPathData() -> NetworkPathSummary {
         let path = self.monitor.currentPath
         
         let status = self.statusString(status: path.status)

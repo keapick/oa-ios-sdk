@@ -8,12 +8,12 @@
 import Foundation
 import Marketing
 
-struct AppStoreReceiptData: Codable {
+struct AppStoreReceiptData: Codable, Sendable {
     let receipt: String
     let isSandboxReceipt: Bool
 }
 
-struct URLScheme: Codable {
+struct URLScheme: Codable, Sendable {
     let type: String
     let schemes: [String]
     
@@ -32,7 +32,7 @@ struct URLScheme: Codable {
 
 /// Reads general app data from the main Bundle
 /// Most are shared across all users of an app version.
-public struct BundleDataCollector {
+struct BundleDataCollector {
     
     /// Reads main bundleIdentifier
     /// https://developer.apple.com/documentation/foundation/nsbundle/1418023-bundleidentifier

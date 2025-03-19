@@ -19,7 +19,7 @@ public final class IDFAMock: IDFASource, Sendable {
     }
 }
 
-public struct DeviceSummary: Codable, Sendable {
+struct DeviceSummary: Codable, Sendable {
     // Metadata
     let sdkVersion: String
     let requestTimestamp: String
@@ -87,25 +87,8 @@ public final class MarketingData: Sendable {
         self.idfaSource = IDFAMock()
     }
     
-    // sample JSON typical of an install event
-    public func jsonSummary(_ config: Config) async -> String? {
-        let summary = await summary(config)
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = ([.prettyPrinted, .sortedKeys])
-        
-        do {
-            let data = try encoder.encode(summary)
-            if let string = String(data: data, encoding: .utf8) {
-                return string
-            }
-        } catch { }
-        
-        return nil
-    }
-    
     // marketing data struct, can be used to generate request JSONs
-    public func summary(_ config: Config) async -> DeviceSummary {
+    func summary(_ config: Config) async -> DeviceSummary {
         var keyValueStore: KeyValueStore = NullKeyValueStore()
         
         // UserDefaults requires a privacy disclosure but is helpful in caching expensive or one time calls
@@ -174,6 +157,23 @@ public final class MarketingData: Sendable {
         summary.trackingAuthorizationStatus = self.idfaSource.readAppTrackingTransparencyOptInStatus()
 
         return summary
+    }
+    
+    // sample event JSON
+    public func jsonSummary(_ config: Config) async -> String? {
+        let summary = await summary(config)
+        
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = ([.prettyPrinted, .sortedKeys])
+        
+        do {
+            let data = try encoder.encode(summary)
+            if let string = String(data: data, encoding: .utf8) {
+                return string
+            }
+        } catch { }
+        
+        return nil
     }
     
 }

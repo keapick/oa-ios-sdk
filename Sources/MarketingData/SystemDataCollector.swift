@@ -15,7 +15,7 @@ import AppKit
 
 import Marketing
 
-struct Utsname: Codable {
+struct Utsname: Codable, Sendable {
     let sysname: String
     let nodename: String
     let release: String
@@ -23,7 +23,7 @@ struct Utsname: Codable {
     let machine: String
 }
 
-struct Sysctl: Codable {
+struct Sysctl: Codable, Sendable {
     let osversion: String
     let model: String
     let machine: String

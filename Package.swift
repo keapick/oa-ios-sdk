@@ -23,7 +23,7 @@ let package = Package(
             name: "MarketingData",
             targets: ["MarketingData"]
         ),
-        // MarketingDataStore brings in SwiftData for persistent device side link and event history.
+        // MarketingDataStore brings in SwiftData for persistent device side link and event history. iOS 17+
         .library(
             name: "MarketingDataStore",
             targets: ["MarketingDataStore"]

@@ -17,10 +17,11 @@ public final class LoggerSwiftUI: ObservableObject, LogDestination {
     
     // line limit, makes it easier to read than a character limit
     // this version trades data duplication for simplicity
-    public var maxLines = 10
+    public let maxLines: Int
     private var textLines: [String] = []
     
-    public init() {
+    public init(maxLines: Int = 10) {
+        self.maxLines = maxLines
         Logger.shared.destination = self
         Logger.shared.playbackBuffer()
     }

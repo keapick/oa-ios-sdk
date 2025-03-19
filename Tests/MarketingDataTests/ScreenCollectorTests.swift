@@ -21,10 +21,18 @@ final class ScreenCollectorTests: XCTestCase {
     func testReadScreenData() async throws {
         let screenData = await ScreenDimensionCollector().readScreenDimensions()
         
+        #if os(macOS)
+        // Is screen size even useful on macOS?
+        XCTAssertNotNil(screenData)
+        XCTAssertTrue(screenData.scale == 0)
+        XCTAssertTrue(screenData.height == 0)
+        XCTAssertTrue(screenData.width == 0)
+        #else
         XCTAssertNotNil(screenData)
         XCTAssertTrue(screenData.scale > 0)
         XCTAssertTrue(screenData.height > 0)
         XCTAssertTrue(screenData.width > 0)
+        #endif
     }
 
 }

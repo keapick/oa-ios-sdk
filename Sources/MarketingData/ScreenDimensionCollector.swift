@@ -14,7 +14,7 @@ import AppKit
 
 import Marketing
 
-struct ScreenDimensions: Codable {
+struct ScreenDimensions: Codable, Sendable {
     let width: Double
     let height: Double
     let scale: Double
@@ -35,6 +35,10 @@ class ScreenDimensionCollector {
         scale = UIScreen.main.scale
         width = UIScreen.main.bounds.size.width * scale
         height = UIScreen.main.bounds.size.height * scale
+        #endif
+        
+        #if canImport(AppKit)
+        // TODO: do we even want screen dimensions?
         #endif
         
         return ScreenDimensions(width: width, height: height, scale: scale)

@@ -31,7 +31,7 @@ public struct DubRequest: Codable, Sendable {
     // Link that opened the App
     let url: String
     
-    // TODO: stuff
+    // TODO: add app or device info
 }
 
 public struct DubResponse: Codable, Sendable {

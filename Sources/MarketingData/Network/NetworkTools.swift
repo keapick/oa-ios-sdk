@@ -7,17 +7,17 @@
 
 import Foundation
 
-public enum NetworkError: Error {
+enum NetworkError: Error {
     case getifaddrsFailure // failure to read network interfaces
 }
 
-public struct NetworkInterface: Codable, Sendable {
-    public let name: String
-    public let type: String
-    public let address: String
+struct NetworkInterface: Codable, Sendable {
+    let name: String
+    let type: String
+    let address: String
 }
 
-public struct NetworkTools {
+struct NetworkTools {
     
     /// Read network interface info from getifaddrs
     ///
@@ -26,9 +26,9 @@ public struct NetworkTools {
     /// privateOnly - only includes interfaces with private addresses
     ///
     /// https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/getifaddrs.3.html
-    public static func readNetworkInterfaces(includeIPv4: Bool = true,
-                                             includeIPv6: Bool = true,
-                                             privateOnly: Bool = true) throws -> [NetworkInterface] {
+    static func readNetworkInterfaces(includeIPv4: Bool = true,
+                                      includeIPv6: Bool = true,
+                                      privateOnly: Bool = true) throws -> [NetworkInterface] {
          
         var listOfInterfaces = [NetworkInterface]()
         

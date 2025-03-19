@@ -8,7 +8,7 @@
 import Foundation
 
 /// Just in case the app wants to store data somewhere other than UserDefaults
-public protocol KeyValueStore: Actor {
+protocol KeyValueStore: Actor {
     func saveString(key: String, value: String) async
     func fetchString(key: String) async -> String?
     func clearString(key: String) async
