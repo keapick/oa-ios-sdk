@@ -27,9 +27,10 @@ public struct LinkResolution: Sendable {
 }
 
 public struct DubRequest: Codable, Sendable {
+    let version: String = "1.0.0"
     
     // Link that opened the App
-    let url: String
+    let link: String
     
     // TODO: add app or device info
 }
@@ -38,6 +39,7 @@ public struct DubResponse: Codable, Sendable {
     
     // destination url
     let url: String
+    let shortLink: String?
     
     // TODO: add other possible payload data
 }
@@ -45,25 +47,29 @@ public struct DubResponse: Codable, Sendable {
 // Dub.co link resolution
 extension LinkResolution {
     
-    // TODO: refactor the dub link resolution service
     public func resolveWithDub(_ link: String) async throws -> DubResponse {
+
         guard let baseURL = config.dubLinkService, let publishableKey = config.dubPublishableKey else {
             throw LinkResolutionError.dubConfigurationError
         }
         
-        let (host, key) = try splitLink(link)
-        guard config.dubSupportedDomains.contains(host) else {
-            throw LinkResolutionError.unsupportedDomain
-        }
-        
-        guard let url = URL(string: "\(baseURL)/links/resolve?domain=\(host)&key=\(key)") else {
+        guard let url = URL(string: "\(baseURL)/links/resolve") else {
             throw LinkResolutionError.dubConfigurationError
         }
         
+        let payload = try JSONEncoder().encode(DubRequest(link: link))
+        
+        
         var request = URLRequest(url: url)
+        request.httpMethod = "POST"
         request.setValue("Bearer \(publishableKey)", forHTTPHeaderField: "Authorization")
+        request.httpBody = payload
         
         let (data, _) = try await URLSession.shared.data(for: request)
+
+//        if let string = String(data: data, encoding: .utf8) {
+//            print("Response: \(string)")
+//        }
         
         let response = try JSONDecoder().decode(DubResponse.self, from: data)
         return response
