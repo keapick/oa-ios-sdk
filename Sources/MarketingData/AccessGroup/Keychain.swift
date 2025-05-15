@@ -53,7 +53,7 @@ struct Keychain {
             kSecAttrService: service,
             kSecAttrAccount: key,
             kSecAttrSynchronizable: kSecAttrSynchronizableAny,
-            kSecReturnAttributes: kCFBooleanTrue!,
+            kSecReturnData: kCFBooleanTrue!,
             kSecMatchLimit: kSecMatchLimitOne
         ] as CFDictionary
         
